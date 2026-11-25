@@ -1,3 +1,4 @@
+import { Bottle3D } from "@/components/lux/Bottle3D";
 import { Gift, Minus, Plus } from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { FRAGRANCES, priceFor } from "@/data/fragrances";
@@ -49,7 +50,7 @@ export function BagDrawer() {
                 className="flex items-center gap-4 rounded-2xl border border-border bg-foreground/5 p-3 animate-in fade-in slide-in-from-right-6 duration-500"
               >
                 <div className="grid h-20 w-16 shrink-0 place-items-center rounded-xl" style={{ background: `color-mix(in oklab, ${f.tone} 18%, transparent)` }}>
-                  <img src={f.img} alt="" className="h-16 object-contain" />
+                  <Bottle3D k={f.key} spin={false} className="h-[4.5rem] w-14" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <h3 className="font-display text-xl leading-tight">{f.name}</h3>

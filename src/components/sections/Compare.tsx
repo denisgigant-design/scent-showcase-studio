@@ -1,3 +1,4 @@
+import { Bottle3D } from "@/components/lux/Bottle3D";
 import { useState } from "react";
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer } from "recharts";
 import { Switch } from "@/components/ui/switch";
@@ -55,7 +56,7 @@ export function Compare() {
               const f = FRAGRANCES[k];
               return (
                 <label key={k} className={`flex cursor-pointer items-center gap-4 rounded-2xl border p-3 transition-all duration-500 ${on[k] ? "border-foreground/30 bg-foreground/5" : "border-border opacity-60"}`}>
-                  <img src={f.img} alt="" className="h-12 w-10 object-contain" />
+                  <Bottle3D k={k} spin={on[k]} className="h-14 w-11" />
                   <span className="flex-1">
                     <span className="font-display block text-xl leading-none">{f.name}</span>
                     <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: f.tone }}>{f.family}</span>

@@ -1,3 +1,4 @@
+import { Bottle3D } from "@/components/lux/Bottle3D";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { FRAGRANCES, PHONE_QUERY, type FragranceKey } from "@/data/fragrances";
@@ -42,7 +43,7 @@ function NotesBody({ fkey }: { fkey: FragranceKey }) {
       </SheetHeader>
 
       <div className="relative mt-6 flex justify-center">
-        <img src={f.img} alt="" className="h-44 animate-float-slow object-contain drop-shadow-2xl" />
+        <Bottle3D k={f.key} drag label={`${f.name} bottle, drag to turn`} className="h-56 w-56" />
       </div>
 
       <Segmented

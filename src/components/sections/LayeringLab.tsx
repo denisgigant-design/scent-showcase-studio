@@ -1,3 +1,4 @@
+import { Bottle3D } from "@/components/lux/Bottle3D";
 import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { DESKTOP_ORDER, FRAGRANCES, type FragranceKey } from "@/data/fragrances";
@@ -20,7 +21,7 @@ function Picker({ value, onChange, other, label }: { value: FragranceKey; onChan
               onClick={() => onChange(k)}
               className={`flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-xs transition-all duration-500 ease-luxe disabled:opacity-25 ${on ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"}`}
             >
-              <img src={f.img} alt="" className={`h-7 w-7 rounded-full object-contain transition-transform duration-500 ${on ? "scale-125" : ""}`} style={{ background: `color-mix(in oklab, ${f.tone} 25%, transparent)` }} />
+              <span className={`grid h-8 w-8 place-items-center overflow-hidden rounded-full transition-transform duration-500 ${on ? "scale-125" : ""}`} style={{ background: `color-mix(in oklab, ${f.tone} 25%, transparent)` }}><Bottle3D k={k} spin={false} className="h-7 w-6" /></span>
               {f.name}
             </button>
           );
@@ -70,8 +71,8 @@ export function LayeringLab() {
                 </p>
               </div>
             </div>
-            <img src={fa.img} alt="" className="absolute bottom-0 left-0 h-1/3 animate-float-slow object-contain transition-all duration-700" style={{ opacity: 0.4 + (100 - mix) / 160 }} />
-            <img src={fb.img} alt="" className="absolute bottom-0 right-0 h-1/3 animate-float-slow object-contain transition-all duration-700 [animation-delay:-3s]" style={{ opacity: 0.4 + mix / 160 }} />
+            <div className="absolute bottom-0 left-0 h-[42%] w-1/3 transition-all duration-700" style={{ opacity: 0.45 + (100 - mix) / 180 }}><Bottle3D k={fa.key} drag className="h-full w-full" /></div>
+            <div className="absolute bottom-0 right-0 h-[42%] w-1/3 transition-all duration-700" style={{ opacity: 0.45 + mix / 180 }}><Bottle3D k={fb.key} drag className="h-full w-full" /></div>
           </div>
         </Reveal>
 

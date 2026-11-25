@@ -1,3 +1,4 @@
+import { Bottle3D } from "@/components/lux/Bottle3D";
 import { useState } from "react";
 import { Plus, RotateCw, ZoomIn } from "lucide-react";
 import { DESKTOP_ORDER, FRAGRANCES, type FragranceKey } from "@/data/fragrances";
@@ -58,11 +59,11 @@ function BottleCard({ fkey }: { fkey: FragranceKey }) {
             }}
             onPointerLeave={() => setLens(null)}
           >
-            <img
-              src={f.img}
-              alt={`${f.name} perfume bottle`}
-              className="h-full object-contain drop-shadow-[0_30px_30px_var(--basalt-deep)] transition-transform duration-700 ease-luxe"
-              style={lens ? { transform: "scale(1.9)", transformOrigin: `${lens.x}% ${lens.y}%` } : undefined}
+            <Bottle3D
+              k={f.key}
+              label={`${f.name} perfume bottle`}
+              className="h-full w-full transition-transform duration-700 ease-luxe"
+              {...(lens ? { style: { transform: "scale(1.9)", transformOrigin: `${lens.x}% ${lens.y}%` } } : {})}
             />
             {lens && (
               <span className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-basalt-deep/70 px-2 py-1 text-[9px] uppercase tracking-[0.18em] backdrop-blur">

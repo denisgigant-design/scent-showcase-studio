@@ -1,3 +1,4 @@
+import { Bottle3D } from "@/components/lux/Bottle3D";
 import { useMemo, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { FRAGRANCES, MOODS, rankFragrances, type Mood } from "@/data/fragrances";
@@ -109,7 +110,7 @@ export function ScentFinder() {
                 </span>
               </div>
             </div>
-            <img src={f.img} alt="" className="mx-auto mt-4 h-52 animate-float-slow object-contain" />
+            <Bottle3D k={f.key} drag label={`${f.name} bottle, drag to turn`} className="mx-auto mt-4 !block h-60 w-60" />
             <div className="mt-6 space-y-2">
               {ranked.slice(1).map((r) => (
                 <div key={r.key} className="flex items-center gap-3 text-xs">

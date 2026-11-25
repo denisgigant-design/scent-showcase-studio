@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Showroom architecture
+- The page body lives in `src/components/site/Home.tsx`; both the app route and `src/static-entry.tsx` (static GitHub Pages build, `bun run build:static` → `dist-static/`) render it. Why: one page, two hosting targets.
+- The WebGL showroom engine and the small bottle viewer are plain ES modules in `public/showroom/` loaded at runtime, not bundled. Why: they share one three.js bundle and must keep working unchanged on static hosts.
+- Every asset URL goes through `import.meta.env.BASE_URL` (or a relative CSS `url()`), never a hard-coded `/…` path in TS. Why: GitHub Pages serves the site from `/<repo>/`.
+- Bottle imagery outside the showroom uses `<Bottle3D>` (live GLB), not the PNG previews. Why: the user rejected the pixelated photos.
