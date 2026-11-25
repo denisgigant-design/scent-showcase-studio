@@ -163,6 +163,30 @@
   transition-timing-function: var(--ease-luxe);
 }
 
+/* Wordmark shrinks once you scroll past the showroom so it never covers section titles. */
+.nav .logo {
+  transform-origin: left top;
+  transition: transform 0.8s var(--ease-luxe);
+}
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -28px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(var(--basalt-deep), transparent);
+  transition: opacity 0.6s;
+}
+.nav[data-compact="true"]::before {
+  opacity: 0.92;
+}
+@media (min-width: 900px) {
+  .nav[data-compact="true"] .logo {
+    transform: scale(0.46);
+  }
+}
+
 /* Scroll reveal: elements start hidden and glide in once visible. */
 [data-reveal] {
   opacity: 0;

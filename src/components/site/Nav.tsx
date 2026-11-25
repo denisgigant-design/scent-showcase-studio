@@ -13,6 +13,17 @@ export function Nav() {
   const { count, setBagOpen } = useSite();
   const [open, setOpen] = useState(false);
   const [bump, setBump] = useState(false);
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const on = () => {
+      const track = document.querySelector("#experience");
+      setCompact(!!track && track.getBoundingClientRect().bottom < 120);
+    };
+    on();
+    addEventListener("scroll", on, { passive: true });
+    return () => removeEventListener("scroll", on);
+  }, []);
 
   useEffect(() => {
     if (!count) return;
@@ -33,7 +44,7 @@ export function Nav() {
   return (
     <>
       <ScrollProgress />
-      <header className="nav">
+      <header className="nav" data-compact={compact}>
         <button className="logo" id="homeBtn" aria-label="Unveiled Finest, return to collection">
           UNVEILED <i>Finest</i>
         </button>

@@ -13,6 +13,7 @@ import {
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { initShowroom, loadShowroomEngine } from "@/showroom/controller";
 import { Segmented } from "@/components/lux/Segmented";
+import { DayNightSwitch } from "@/components/lux/DayNightSwitch";
 import { useSite } from "./store";
 
 /**
@@ -222,6 +223,7 @@ export function Showroom() {
               </div>
             </div>
           </div>
+          <ZoomCards key={selected} fkey={selected} open={inDetail} />
           <div className={`hero-product ${selected}`} id="heroProduct">
             <img src={f.img} id="heroImage" alt={`${f.name} bottle`} />
           </div>
@@ -235,6 +237,85 @@ export function Showroom() {
         />
       </div>
     </section>
+  );
+}
+
+const TIERS = [
+  { value: "top", label: "Top", when: "First 15 minutes" },
+  { value: "heart", label: "Heart", when: "Hours 1–4" },
+  { value: "base", label: "Base", when: "Lingers 8h+" },
+] as const;
+
+/** Floating cards that glide in beside the bottle when you zoom in (wide screens only). */
+function ZoomCards({ fkey, open }: { fkey: FragranceKey; open: boolean }) {
+  const f = FRAGRANCES[fkey];
+  const [tier, setTier] = useState<"top" | "heart" | "base">("top");
+  const [night, setNight] = useState(false);
+  const side = (dir: "left" | "right") =>
+    `glass-card absolute top-1/2 hidden w-[270px] rounded-3xl p-5 transition-all duration-700 ease-luxe min-[1100px]:block ${dir === "left" ? "left-[4.3%]" : "right-[4.3%]"} ${
+      open
+        ? "-translate-y-1/2 translate-x-0 opacity-100 delay-300"
+        : `-translate-y-1/2 opacity-0 ${dir === "left" ? "-translate-x-10" : "translate-x-10"}`
+    }`;
+  const bars = [
+    ["Freshness", f.metrics.freshness],
+    ["Floral", f.metrics.floral],
+    ["Woody", f.metrics.woody],
+    ["Longevity", f.metrics.longevity],
+  ] as const;
+  return (
+    <>
+      <div className={side("left")}>
+        <p className="eyebrow-text mb-3">Scent pyramid</p>
+        <Segmented
+          label="Note tier"
+          size="sm"
+          value={tier}
+          onChange={setTier}
+          options={TIERS.map((t) => ({ value: t.value, label: t.label }))}
+        />
+        <div key={tier} className="mt-4 space-y-2">
+          {f.notes[tier].map((n, i) => (
+            <div
+              key={n}
+              className="flex items-center gap-3 rounded-2xl border border-border bg-foreground/5 px-3.5 py-2.5 text-sm animate-in fade-in slide-in-from-left-4 duration-500"
+              style={{ animationDelay: `${i * 90}ms`, animationFillMode: "both" }}
+            >
+              <span className="size-1.5 rounded-full shadow-glow" style={{ background: f.tone, ["--glow" as string]: f.tone }} />
+              {n}
+            </div>
+          ))}
+        </div>
+        <p className="mt-3 text-[11px] text-muted-foreground">{TIERS.find((t) => t.value === tier)?.when}</p>
+      </div>
+
+      <div className={side("right")}>
+        <p className="eyebrow-text mb-4">Character</p>
+        <div className="space-y-3">
+          {bars.map(([label, v], i) => (
+            <div key={label}>
+              <div className="mb-1 flex justify-between text-[11px]">
+                <span>{label}</span>
+                <span className="tabular-nums text-muted-foreground">{v}</span>
+              </div>
+              <div className="h-1 overflow-hidden rounded-full bg-foreground/10">
+                <div
+                  className="h-full rounded-full transition-[width] duration-1000 ease-luxe"
+                  style={{ width: open ? `${v}%` : "0%", background: f.tone, boxShadow: `0 0 10px ${f.tone}`, transitionDelay: `${400 + i * 90}ms` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+          <span className="eyebrow-text">{night ? "After dark" : "Daylight"}</span>
+          <DayNightSwitch night={night} onChange={setNight} />
+        </div>
+        <p key={String(night)} className="font-display mt-3 text-lg leading-snug animate-in fade-in duration-700">
+          “{night ? f.night : f.day}”
+        </p>
+      </div>
+    </>
   );
 }
 

@@ -53,11 +53,11 @@ export function LayeringLab() {
             {/* liquid orbs */}
             <div
               className="blob absolute inset-[8%] opacity-80 mix-blend-screen blur-2xl transition-all duration-1000 ease-luxe"
-              style={{ background: fa.tone, transform: `translateX(${-mix / 3}%) scale(${1.2 - mix / 200})` }}
+              style={{ background: fa.tone, transform: `translateX(${-12 - mix / 4}%) scale(${1.2 - mix / 200})` }}
             />
             <div
               className="blob absolute inset-[8%] opacity-80 mix-blend-screen blur-2xl transition-all duration-1000 ease-luxe [animation-delay:-4s]"
-              style={{ background: fb.tone, transform: `translateX(${(100 - mix) / 3}%) scale(${0.7 + mix / 200})` }}
+              style={{ background: fb.tone, transform: `translateX(${12 + (100 - mix) / 4}%) scale(${0.7 + mix / 200})` }}
             />
             <div className="glass-card absolute inset-[16%] grid place-items-center rounded-full">
               <div className="text-center">
